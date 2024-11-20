@@ -1,3 +1,51 @@
+// self notes
+// a normal function
+function hello(string) {
+    console.log(`Hello, ${string}`);
+}
+// you can also hold a function in a variable to maybe assign it another variable? 
+// the function name helloUwU seems useless but it can be used -
+// 1. it will show helloUwU in the debugger stack 
+// 2. it will help in recursive calls
+const weirdFunction = function helloUwU(string) {
+    console.log(`hellowie ooni chan ${string}`);
+}
+
+// example for recursive calls
+const a = function randomPatani(n) {
+    if (n > 0) {
+        console.log(n);
+        randomPatani(n - 1); // Recursive call
+    }
+};
+
+// BTW WE CAN ALSO NOT NAME THE FUNCTION INSIDE IF WE ARE ASSIGNING IT TO A VARIABLE
+const helloWorld = function(string) {
+    console.log(`Hello world, ${string}`);
+}
+
+// but why not just use an arrow function atp?
+
+const helloWorldButBetter = () => {
+    console.log(`Hello World!`);
+}
+
+// If your function doesn’t need its own this or arguments, and isn't recursive or 
+// named for clarity/debugging, arrow functions are usually the better choice. However, 
+// traditional functions still have their place in situations requiring dynamic this or richer context.
+
+const obj = {
+    message: "Hello, world!",
+    print: function () {
+        console.log(this.message); // Works: "Hello, world!"
+    },
+    printArrow: () => {
+        console.log(this.message); // Undefined: `this` refers to the outer scope.
+    }
+};
+obj.print();        // "Hello, world!"
+obj.printArrow();   // Undefined
+
 
 function sayMyName(){
     console.log("H");
