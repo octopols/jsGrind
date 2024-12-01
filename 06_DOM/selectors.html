@@ -1,0 +1,103 @@
+<!--
+    | Method                         | Return Type       | Description                                      |
+    |--------------------------------|-------------------|--------------------------------------------------|
+    | getElementById()               | Element | null    | Selects an element by its ID.                    |
+    | getElementsByClassName()       | HTMLCollection    | Selects elements by class name.                  |
+    | getElementsByTagName()         | HTMLCollection    | Selects elements by tag name.                    |
+    | querySelector()                | Element | null    | Selects the first matching element by a CSS selector. |
+    | querySelectorAll()             | NodeList          | Selects all matching elements by a CSS selector.|
+    | getElementsByName()            | NodeList          | Selects elements by their name attribute.       |
+    | children                       | HTMLCollection    | Selects child elements of an element.           |
+    | childNodes                     | NodeList          | Selects all child nodes (elements, text, comments). |
+    | getRootNode()                  | Node              | Selects the root node of the document.          |
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live vs Static Collections in JavaScript</title>
+  </head>
+  <body>
+    <h1>Live vs Static Collections in JavaScript</h1>
+    <p>
+      Learn about how DOM selection methods return either live or static
+      collections and their historical context.
+    </p>
+
+    <div class="myClass">Div 1</div>
+    <div class="myClass">Div 2</div>
+
+    <!-- We'll add a new div dynamically later to test live/static behavior -->
+
+    <button onclick="addNewElement()">Add New Element</button>
+
+    <script>
+      // === Live vs Static Collections ===
+
+      // 1. Live Collections - getElementsByClassName
+      // getElementsByClassName returns a live HTMLCollection of all matching elements.
+      // A live collection means it updates automatically when the DOM changes.
+      console.log("Live Collection (HTMLCollection):");
+      let liveCollection = document.getElementsByClassName("myClass");
+      console.log(liveCollection); // HTMLCollection of divs with class 'myClass'
+      console.log("Initial length:", liveCollection.length); // Initially, should log 2
+
+      // Adding a new element with the same class to the DOM
+      function addNewElement() {
+        let newDiv = document.createElement("div");
+        newDiv.className = "myClass";
+        document.body.appendChild(newDiv); // This will add a new div with class 'myClass'
+
+        // Check the live collection again after adding the new element
+        console.log("Updated Live Collection:");
+        console.log(liveCollection); // Should automatically include the new div
+        console.log("Updated length:", liveCollection.length); // Length should increase to 3
+      }
+
+      // 2. Static Collections - querySelectorAll
+      // querySelectorAll returns a static NodeList of all matching elements.
+      // A static collection does not update when the DOM changes.
+      console.log("Static Collection (NodeList):");
+      let staticCollection = document.querySelectorAll(".myClass");
+      console.log(staticCollection); // NodeList of divs with class 'myClass'
+      console.log("Initial length:", staticCollection.length); // Initially, should log 2
+
+      // Adding a new element to the DOM and checking static collection again
+      setTimeout(() => {
+        console.log("Static Collection after adding a new element:");
+        console.log(staticCollection); // Should still show only 2 elements, not updated
+        console.log("Static length:", staticCollection.length); // Length remains 2
+      }, 1000); // Delay to allow for DOM update
+
+      // === Why Two Types of Collections? ===
+      // 1. **HTMLCollection** - Historical context:
+      //    - Was introduced early in the DOM API for compatibility with HTML documents.
+      //    - It's live, so it updates automatically when elements in the DOM change.
+      //    - This was useful for real-time dynamic web applications where elements might be added/removed frequently.
+      //    - Example methods returning HTMLCollection: getElementsByTagName, getElementsByClassName.
+
+      // 2. **NodeList** - Introduced later:
+      //    - Can represent all types of nodes (not just elements).
+      //    - Static versions of NodeList (like querySelectorAll) were introduced to support modern web apps.
+      //    - NodeList is typically more efficient in scenarios where real-time updates aren't necessary.
+      //    - Example methods returning NodeList: querySelectorAll, getElementsByName.
+
+      // === Why Keep Both? ===
+      // 1. **Backward Compatibility**:
+      //    - Existing applications using live collections (HTMLCollection) would break if they were removed.
+      // 2. **Different Use Cases**:
+      //    - HTMLCollection is useful for applications requiring real-time DOM updates.
+      //    - NodeList offers better performance when the DOM doesn't need to be re-queried constantly.
+      // 3. **Evolution of the Web**:
+      //    - As JavaScript frameworks and single-page applications (SPAs) emerged, the need for more predictable, efficient tools became crucial.
+      //    - Static collections (NodeList) improve performance in many scenarios.
+
+      // === Which One to Use? ===
+      // - **Use NodeList (querySelectorAll)** unless you specifically need a live collection.
+      // - Static collections (NodeList) are easier to work with and more predictable.
+      // - Use HTMLCollection when working with older codebases that rely on live collections or if you need to track real-time DOM changes.
+    </script>
+  </body>
+</html>

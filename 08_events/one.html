@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <title>HTML Events</title>
+  </head>
+
+  <body>
+    <h2>Amazing Images</h2>
+    <div>
+      <ul id="images">
+        <li>
+          <img id="tajMahal" width="200px" src="images/DSC00107.jpg" />
+        </li>
+        <li>
+          <img
+            id="blrBuildings"
+            width="200px"
+            src="images/DSC00244.jpg"
+            alt=""
+          />
+        </li>
+        <li>
+          <img
+            id="toaster"
+            class="one"
+            width="200px"
+            src="images/DSC00254.jpg"
+            alt=""
+          />
+        </li>
+        <li>
+          <img
+            id="mountains"
+            class="one"
+            width="200px"
+            src="images/DSC00602.jpg"
+            alt=""
+          />
+        </li>
+        <li>
+          <img
+            id="cableCar"
+            class="one"
+            width="200px"
+            src="images/DSC00709.jpg"
+            alt=""
+          />
+        </li>
+        <li>
+          <img id="sushi" width="200px" src="images/DSC00801.jpg" alt="" />
+        </li>
+        <li>
+          <img id="stars" width="200px" src="images/DSC00823.jpg" alt="" />
+        </li>
+        <li><a href="https://google.com/" id="google">Google</a></li>
+      </ul>
+    </div>
+  </body>
+
+  <script>
+    const toaster = document.querySelector("#toaster");
+    const ul = document.querySelector("#images");
+    const classOne = document.querySelector(".one"); //only selects the first element with class one
+    const classOne1 = document.querySelectorAll(".one");
+    const classOne2 = document.getElementsByClassName("one");
+    const google = document.querySelector("#google");
+
+    console.log(classOne);
+    console.log(classOne2);
+
+    // *************************
+    // element.addEventListener(event, listener, useCapture);
+    // *************************
+
+    // `useCapture` is optional.
+
+    // `useCapture` is an older, boolean argument (now often replaced by the `capture` property in the options object)
+    // that specifies whether the event listener should be triggered during the capture phase or the bubble phase.
+
+    // true: The event listener is triggered during the capturing phase (as the event propagates down the DOM tree).
+    // false (default): The event listener is triggered during the bubbling phase (as the event propagates up the DOM tree).
+
+    // Example behavior:
+    // If `useCapture` is false (default): "toaster is here" is logged first because the listener on the target element (deeper in the DOM) executes first.
+    // If `useCapture` is true: "ul is selected" is logged first because the listener on the <ul> (higher in the DOM) executes first during the capturing phase.
+
+    // *************************
+    // EVENT PROPAGATION
+    // *************************
+
+    // When an event, such as a click, occurs, and we have event listeners at different levels of the DOM,
+    // for example, a <ul> element and an <img> tag inside an <li> element within the <ul>,
+    // the order of execution depends on the event's propagation phase (capture or bubble).
+
+    // DOM is structured as a tree, and events propagate through it in three phases:
+    // 1. Capture phase: The event propagates from the root down to the target element.
+    // 2. Target phase: The event reaches the target element.
+    // 3. Bubble phase: The event propagates back up from the target element to the root.
+
+    // By default, event listeners execute during the bubble phase (`useCapture: false`).
+    // So in this case, the event first goes to the <img> during the target phase,
+    // executes the code associated with its event listener, and then bubbles up to the <ul>.
+
+    // If we set `useCapture: true`, the event listener will execute during the capture phase.
+    // In this case, the <ul>'s event listener will execute first as the event propagates down the DOM tree,
+    // followed by the <img>'s event listener during the target phase.
+
+    // Additionally, we can stop event propagation at any stage by calling the `stopPropagation()` function on the event object.
+    // This prevents the event from continuing to propagate further in either the capture or bubble phase.
+
+    images.addEventListener(
+      "click",
+      (e) => {
+        console.log(e);
+        alert("ul is selected");
+      },
+      false
+    );
+
+    // toaster.addEventListener(
+    //   "click",
+    //   (e) => {
+    //     console.log(e);
+    //     alert("toaster is here");
+    //   },
+    //   false
+    // );
+
+    // *************************
+    // `element.addEventListener(event, listener, options);`
+    // *************************
+
+    // `options` is a configuration object with the following properties:
+
+    // capture:     Specifies whether the event listener should be executed during the capture phase (true)
+    //              or the bubble phase (false, default). It replaces the older `useCapture` argument.
+
+    // once:        Ensures the event listener is invoked only once. After the listener is executed,
+    //              it is automatically removed.
+
+    // passive:     Indicates that the event listener will not call `preventDefault()`.
+    //              This helps the browser optimize performance for certain events.
+
+    // Explanation of `passive`:
+    // When an event listener is attached to an element, the browser may need to wait for the listener
+    // to finish execution before proceeding with the default action.
+    // For example:
+    // - In scroll events, the browser pauses rendering the next frame of content until the event listener
+    //   completes, in case `preventDefault()` is called.
+    // - Using `passive: true` explicitly tells the browser that the listener will not call `preventDefault()`,
+    //   allowing it to proceed with rendering without waiting for the listener to complete.
+    // This is particularly useful for performance optimization during fast events like scrolling.
+
+    toaster.addEventListener(
+      "click",
+      (e) => {
+        console.log(e);
+        e.stopPropagation(); // stops bubbling of the event
+        alert("toaster is here");
+      },
+      { passive: true, once: true } // event will not call preventDefault(), only invoke once
+    );
+
+    google.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("Default prevented", e);
+    });
+
+    // Ctrl + f5 to force reload a webpage and its cache
+  </script>
+</html>

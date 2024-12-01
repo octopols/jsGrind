@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node vs Element and DOM Manipulation</title>
+  </head>
+
+  <body>
+    <h1>Node vs Element & DOM Manipulation</h1>
+    <p>
+      This page demonstrates the difference between Node and Element, as well as
+      how to manipulate the DOM by inserting, removing, and replacing nodes.
+    </p>
+
+    <!-- Example elements for manipulation -->
+    <div id="parent">
+      <div id="child1" class="child">Child 1</div>
+      <div id="child2" class="child">Child 2</div>
+    </div>
+
+    <!-- Buttons to trigger manipulations -->
+    <button onclick="insertNode()">Insert a New Node</button>
+    <button onclick="removeNode()">Remove a Node</button>
+    <button onclick="replaceNode()">Replace a Node</button>
+
+    <script>
+      /*
+          1. Node vs Element Explanation
+         
+          - A **Node** is the basic unit of the DOM (Document Object Model). It represents any type of DOM object, including elements, text, comments, and more.
+          - An **Element** is a more specific type of Node. It represents an HTML element (such as `<div>`, `<p>`, etc.). Elements are a subset of nodes.
+         
+          Node Types:
+           - Element Node: Represents HTML tags like <div>, <p>, etc.
+           - Text Node: Represents the text inside elements.
+           - Comment Node: Represents comment nodes <!-- This is a comment -->
+           - Document Node: Represents the entire document.
+
+            Let's demonstrate working with Nodes and Elements.
+      */
+
+      // Get the parent and child elements to use in manipulation
+      let parent = document.getElementById("parent");
+      let child1 = document.getElementById("child1");
+      let child2 = document.getElementById("child2");
+
+      console.log("Node Types:");
+      console.log("Child1 Node:", child1.nodeType); // Element node (1)
+      console.log(
+        "Child1 is an element?",
+        child1.nodeType === Node.ELEMENT_NODE
+      ); // true
+
+      console.log("Text content of child1:", child1.textContent); // Logs the text content inside the div element
+
+      console.log("Parent Node:", parent.nodeName); // Logs "DIV" as parent is a div element
+
+      /**
+       * 2. Insertion Manipulators
+       *
+       * - We can insert new nodes (elements, text, etc.) into the DOM using several methods like appendChild(), insertBefore(), etc.
+       * - Insertion can be done at the end, before specific nodes, or at specific positions.
+       */
+
+      function insertNode() {
+        // Create a new node (an element)
+        let newElement = document.createElement("div");
+        newElement.id = "child3";
+        newElement.className = "child";
+        newElement.textContent = "Child 3";
+
+        // Insert the new node at the end of the parent element using appendChild()
+        parent.appendChild(newElement);
+        console.log("New child inserted at the end:", newElement);
+      }
+
+      /**
+       * 3. Removal Manipulators
+       *
+       * - Removal of nodes can be done using removeChild(), remove(), etc.
+       * - These methods are used to completely remove nodes from the DOM.
+       */
+
+      function removeNode() {
+        // Explanation:
+        // - removeChild() is used to remove a specific child node from its parent.
+        //   - Syntax: parentNode.removeChild(childNode);
+        //   - It removes the child node and returns it, so you can store or reuse the removed node later.
+        //   - Example: parent.removeChild(child2);
+
+        // - remove() is another method that can be used directly on the node to remove itself from the DOM.
+        //   - shorthand for parent.removeChild();
+        //   - Syntax: childNode.remove();
+        //   - It removes the node directly without needing the parent reference.
+        //   - Example: child2.remove();
+
+        // Remove the second child node (child2) from the parent
+        parent.removeChild(child2); // child2 is removed from the DOM
+        console.log("Removed child2 from the DOM");
+
+        // Alternatively, you can use child2.remove() instead:
+        // child2.remove(); // Removes 'child2' directly
+      }
+
+      /**
+       * 4. Replacement Manipulators
+       *
+       * - Replacement of nodes is done using replaceChild().
+       * - This allows us to replace one node with another in the DOM.
+       */
+
+      function replaceNode() {
+        // Explanation:
+        // - replaceChild() is used to replace a specific child node with another.
+        //   - Syntax: parentNode.replaceChild(newNode, oldNode);
+        //   - The oldNode is replaced with the newNode.
+        //   - This method returns the old node (the one that has been replaced), allowing you to store it if needed.
+        //   - Example: parent.replaceChild(newElement, child1);
+
+        // Create a new node (element) to replace child1
+        let newElement = document.createElement("div");
+        newElement.id = "child4";
+        newElement.className = "child";
+        newElement.textContent = "Child 4 (Replaced)";
+
+        // Replace child1 with the new element using replaceChild()
+        parent.replaceChild(newElement, child1); // child1 is replaced with newElement
+        console.log("Replaced child1 with child4");
+      }
+    </script>
+  </body>
+</html>

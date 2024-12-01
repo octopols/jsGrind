@@ -5,7 +5,7 @@
 // for (const element in arr) {
 //     console.log(element);
 // }
-// this does not return anything 
+// this does not return anything
 //const ans1 = arr.forEach( (item) => console.log(item) );
 //executes a function for every element in an array
 // arr.forEach( (item) => console.log(item) );
@@ -26,22 +26,22 @@
 // }
 // Pass the callback to the main function
 // performTask(taskDone);
-// reduce is used to reduce the array to some value with 
+// reduce is used to reduce the array to some value with
 // some logic
 // const shoppingCart = [1, 2, 3, 4, 5, 6];
 // const sum = shoppingCart.reduce( (sum, index) => sum + index, 0 );
 // console.log(sum);
 export const shoppingCart = [
-    {
-        itemName: "js-course",
-        price: 299
-    },
-    {
-        itemName: "android-course",
-        price: 500
-    },
-    {
-        itemName: "ai-course",
-        price: 600
-    }
+  {
+    itemName: "js-course",
+    price: 299,
+  },
+  {
+    itemName: "android-course",
+    price: 500,
+  },
+  {
+    itemName: "ai-course",
+    price: 600,
+  },
 ];

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Manipulation Functions</title>
+  </head>
+  <body>
+    <h1>DOM Manipulation Functions</h1>
+    <p>
+      This page demonstrates how to manipulate DOM elements using various
+      functions.
+    </p>
+
+    <!-- Example elements to manipulate -->
+    <div id="container">
+      <p id="firstPara">This is the first paragraph.</p>
+      <p id="secondPara">This is the second paragraph.</p>
+    </div>
+
+    <!-- Button to trigger manipulations -->
+    <button onclick="manipulateDOM()">Manipulate DOM</button>
+
+    <script>
+      /**
+       * DOM Manipulation Functions
+       * This function demonstrates various DOM manipulation methods.
+       */
+
+      function manipulateDOM() {
+        // 1. setAttribute()
+        // Sets a new attribute or modifies an existing attribute of an element
+        let firstPara = document.getElementById("firstPara");
+        firstPara.setAttribute("style", "color: red; font-size: 20px;"); // Change style via attribute
+
+        // 2. removeAttribute()
+        // Removes an attribute from an element
+        firstPara.removeAttribute("style"); // Remove the style attribute set earlier
+
+        // 3. classList.add()
+        // Adds one or more class names to an element
+        firstPara.classList.add("highlighted"); // Add a class to the first paragraph
+
+        // 4. classList.remove()
+        // Removes one or more class names from an element
+        firstPara.classList.remove("highlighted"); // Remove the 'highlighted' class
+
+        // 5. classList.toggle()
+        // Toggles a class on/off. If the class exists, it will be removed; if it doesn't exist, it will be added.
+        firstPara.classList.toggle("highlighted"); // Toggle the 'highlighted' class
+
+        // 6. appendChild()
+        // Appends a new child element to an existing parent element
+        let newPara = document.createElement("p");
+        newPara.textContent = "This is a new paragraph added via appendChild.";
+        document.getElementById("container").appendChild(newPara); // Append the new paragraph to the container
+
+        // 7. insertBefore()
+        // Inserts a new node before an existing node
+        let anotherNewPara = document.createElement("p");
+        anotherNewPara.textContent =
+          "This paragraph will be inserted before the first one.";
+        document
+          .getElementById("container")
+          .insertBefore(anotherNewPara, firstPara); // Insert before the first paragraph
+
+        // 8. removeChild()
+        // Removes a child element from its parent
+        let secondPara = document.getElementById("secondPara");
+        document.getElementById("container").removeChild(secondPara); // Remove the second paragraph
+
+        // 9. replaceChild()
+        // Replaces an existing child element with a new one
+        let newDivElement = document.createElement("div");
+        newDivElement.textContent = "This div replaces the first paragraph.";
+        document
+          .getElementById("container")
+          .replaceChild(newDivElement, firstPara); // Replace the first paragraph with the new div
+
+        // 10. cloneNode()
+        // Clones an existing node (deep or shallow)
+        let clonedPara = newDivElement.cloneNode(true); // Deep clone (includes children)
+        document.getElementById("container").appendChild(clonedPara); // Append the cloned div to the container
+
+        // 11. innerHTML
+        // Allows you to get or set the HTML content inside an element
+        let container = document.getElementById("container");
+        container.innerHTML +=
+          "<p>This is content added directly using innerHTML.</p>"; // Add HTML content
+
+        // 12. textContent
+        // Sets or gets the text content of an element
+        container.textContent += " This is appended using textContent."; // Add text content directly
+
+        // 13. insertAdjacentHTML()
+        // Inserts HTML text relative to an element (beforebegin, afterbegin, beforeend, afterend)
+        container.insertAdjacentHTML(
+          "beforeend",
+          "<p>Inserted content using insertAdjacentHTML.</p>"
+        );
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attribute Manipulation Functions</title>
+  </head>
+  <body>
+    <h1>Attribute Manipulation Functions</h1>
+    <p>
+      This page demonstrates how to manipulate attributes of elements using
+      JavaScript functions.
+    </p>
+
+    <!-- Example elements with attributes to manipulate -->
+    <div id="box" class="box" data-info="123" title="This is a box">
+      <p>Click the button to manipulate attributes of this div.</p>
+    </div>
+
+    <button onclick="manipulateAttributes()">Manipulate Attributes</button>
+
+    <script>
+      /**
+       * Attribute Manipulation Functions
+       * This function demonstrates how to manipulate attributes of DOM elements.
+       */
+
+      function manipulateAttributes() {
+        // 1. setAttribute()
+        // The setAttribute() method is used to set a new value for an existing attribute or add a new attribute to an element.
+        let box = document.getElementById("box");
+        // Setting the 'title' attribute to a new value
+        box.setAttribute("title", "Updated title of the box");
+        console.log(
+          "Title attribute after setAttribute:",
+          box.getAttribute("title")
+        ); // Logs the new title value
+
+        // 2. getAttribute()
+        // The getAttribute() method retrieves the value of a specified attribute from an element.
+        let titleValue = box.getAttribute("title");
+        console.log("Current title value:", titleValue); // Logs the current title value
+
+        // 3. removeAttribute()
+        // The removeAttribute() method is used to remove an attribute from an element.
+        // In this case, we are removing the 'data-info' attribute.
+        box.removeAttribute("data-info");
+        console.log(
+          "After removeAttribute, data-info attribute:",
+          box.getAttribute("data-info")
+        ); // Logs 'null' because the attribute was removed
+
+        // 4. hasAttribute()
+        // The hasAttribute() method checks if an element has a specific attribute.
+        // It returns true if the element has the specified attribute, otherwise false.
+        let hasClass = box.hasAttribute("class");
+        console.log("Does the element have class attribute?", hasClass); // Logs 'true' because the 'class' attribute exists.
+
+        // 5. toggleAttribute()
+        // The toggleAttribute() method adds the specified attribute if it is not present, and removes it if it is present.
+        // Here, we toggle the 'disabled' attribute of the button.
+        let button = document.querySelector("button");
+        button.toggleAttribute("disabled"); // If the button was disabled, it will be enabled; if it was enabled, it will be disabled.
+        console.log("Is the button disabled?", button.hasAttribute("disabled")); // Logs the current state of the 'disabled' attribute
+
+        // 6. dataset (for data-* attributes)
+        // The dataset property provides access to all data-* attributes of an element as a DOMStringMap.
+        // It allows you to work with custom data attributes on elements.
+        let boxData = box.dataset;
+        console.log("Dataset attributes:", boxData); // Logs an object representing all data-* attributes of the element
+        box.dataset.customInfo = "Custom data value"; // Adding a new custom data attribute
+        console.log("New customInfo attribute:", box.dataset.customInfo); // Logs the newly added data attribute value
+      }
+    </script>
+  </body>
+</html>
